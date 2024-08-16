@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+	</head>
+	<body onload="doShowAnimation()" id="overlay">
+		<div class="overlay">
+			<!-- <svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="icon"
+				fill="currentColor"
+				viewBox="0 0 256 256"
+			>
+				<path
+					d="M208,164a28,28,0,1,1-28-28A28,28,0,0,1,208,164ZM52,168a28,28,0,1,0,28,28A28,28,0,0,0,52,168Z"
+					opacity="0.2"
+				></path>
+				<path
+					d="M212.92,17.69a8,8,0,0,0-6.86-1.45l-128,32A8,8,0,0,0,72,56V166.08A36,36,0,1,0,88,196V110.25l112-28v51.83A36,36,0,1,0,216,164V24A8,8,0,0,0,212.92,17.69ZM52,216a20,20,0,1,1,20-20A20,20,0,0,1,52,216ZM88,93.75V62.25l112-28v31.5ZM180,184a20,20,0,1,1,20-20A20,20,0,0,1,180,184Z"
+				></path>
+			</svg> -->
+			<img src="/assets/xp-music-note.png" alt="" class="icon" />
+			<p class="text">
+				<span class="details" id="track-info-withyear">TRACK INFO HERE</span>
+			</p>
+		</div>
+
+		<style>
+			body {
+				margin: 0;
+				font-family: "Franklin Gothic", Arial, sans-serif;
+
+				opacity: 0%;
+				transition: opacity 1s steps(16);
+			}
+
+			.overlay {
+				display: flex;
+				flex-flow: row nowrap;
+				align-items: center;
+				font-size: 14px;
+				gap: 0.5em;
+				color: black;
+				font-weight: 700;
+
+				width: fit-content;
+
+				background-color: #ede9d9;
+				border: 1px solid black;
+				border-radius: 8px;
+				margin: 8px;
+
+				padding: 6px 12px;
+				padding-left: 8px;
+
+				filter: drop-shadow(0px 1px 2px rgb(0, 0, 0));
+			}
+
+			.text {
+				margin: 0;
+			}
+
+			.icon {
+				--icon-size: 1.5em;
+
+				width: var(--icon-size);
+				height: var(--icon-size);
+
+				image-rendering: pixelated;
+			}
+
+			.details {
+			}
+
+			.showing {
+				opacity: 100%;
+			}
+		</style>
+
+		<script>
+			const overlayElement = document.getElementById("overlay");
+			const textElement = document.getElementById("track-info-withyear");
+
+			let prevInfo = textElement.innerText;
+			let nextHideTimeout;
+
+			setInterval(async () => {
+				const res = await fetch("/music?year=true&showPaused=true", {
+					headers: {
+						Accept: "text/plain",
+					},
+				});
+
+				const trackInfo = await res.text();
+
+				if (prevInfo !== trackInfo) {
+					// track has changed!
+					doShowAnimation(() => {
+						textElement.innerText = trackInfo;
+						prevInfo = trackInfo;
+					});
+				}
+			}, 2_500);
+
+			function doShowAnimation(runOnceHidden) {
+				if (typeof nextHideTimeout === "number") {
+					clearTimeout(nextHideTimeout);
+				}
+
+				overlayElement.classList.remove("showing");
+				setTimeout(() => {
+					runOnceHidden?.();
+					overlayElement.classList.add("showing");
+
+					nextHideTimeout = setTimeout(() => {
+						overlayElement.classList.remove("showing");
+					}, 10_000);
+				}, 1_000);
+			}
+		</script>
+	</body>
+</html>

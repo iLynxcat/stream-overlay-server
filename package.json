@@ -1,0 +1,17 @@
+{
+	"name": "@ilynxcat/stream-overlayer",
+	"module": "index.ts",
+	"type": "module",
+	"scripts": {
+		"compile": "bun build --compile --outfile overlayer index.ts"
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"@jxa/run": "^1.3.6"
+	}
+}

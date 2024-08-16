@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+	</head>
+	<body>
+		<div class="overlay" id="overlay">
+			<p class="text">
+				<span class="details" id="track-info"></span>
+			</p>
+		</div>
+
+		<style>
+			:root {
+				--icon-size: 1.5em;
+			}
+
+			body {
+				margin: 0;
+				font-family: Arial, sans-serif;
+				font-size: 18px;
+				color: black;
+			}
+
+			.overlay {
+				display: flex;
+				flex-flow: row nowrap;
+				align-items: center;
+				gap: 0.7em;
+
+				width: fit-content;
+			}
+
+			.text {
+				margin: 0;
+				font-weight: 700;
+			}
+
+			.icon {
+				width: var(--icon-size);
+				height: var(--icon-size);
+			}
+
+			.details {
+			}
+		</style>
+
+		<script>
+			const textElement = document.getElementById("track-info");
+
+			setInterval(async () => {
+				const res = await fetch("/music", {
+					headers: {
+						Accept: "text/plain",
+					},
+				});
+
+				const trackInfo = await res.text();
+				console.log(`Fetched update, ${trackInfo}`);
+
+				textElement.innerText = trackInfo;
+			}, 2_500);
+		</script>
+	</body>
+</html>
