@@ -1,16 +1,20 @@
 import { server } from ".";
 import { formatTrack, getCurrentTrack } from "./jxa";
-import { join as joinPath } from "node:path";
 
 export const overlayListRewriter = new HTMLRewriter().on("#overlay-list", {
 	async element(element) {
-		const overlays = ["music", "music?style=xp"];
+		const overlays = ["music?style=basic", "music?style=xp"];
 
 		element.setInnerContent(
 			overlays
 				.map(
 					(overlay) =>
-						`<li><a href="/${overlay}">${overlay}</a><br /><br /><strong>source:</strong> <pre>${server.url}${overlay}</pre></li>`
+						`<li><a href="/${overlay}">${overlay
+							.split(/[\?&]/)
+							.map((t, i) => (i > 0 ? `(${t.replaceAll("=", ": ")})` : t))
+							.join(" ")}</a><br /><br /><strong>source url:</strong> <pre>${
+							server.url
+						}${overlay}</pre></li>`
 				)
 				.join(""),
 			{ html: true }

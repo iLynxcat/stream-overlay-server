@@ -4,14 +4,21 @@
 		<meta charset="UTF-8" />
 		<title>Overlays</title>
 	</head>
-	<body>
-		<h1>Overlay dashboard</h1>
-		<p>This is the overlays server!</p>
-		<h2>Actions</h2>
-		<form action="/kill_server" method="post">
-			<button>Kill the server!</button>
-		</form>
-		<h2>Available overlays</h2>
-		<ul id="overlay-list"></ul>
+	<body style="display: grid; justify-content: center">
+		<main style="max-width: 48rem">
+			<h1>Overlay dashboard</h1>
+			<p>This is the overlays server!</p>
+			<h2>Actions</h2>
+			<form action="/kill_server" method="post">
+				<button>Kill the server!</button>
+			</form>
+			<h2>Available overlays</h2>
+			<p>
+				All overlays will look best in Chrome or any Chromium/Blink-based
+				browser which includes OBS's embedded browser source; I've found
+				rendering glitches in WebKit (Safari) and Gecko (Firefox).
+			</p>
+			<ul id="overlay-list"></ul>
+		</main>
 	</body>
 </html>

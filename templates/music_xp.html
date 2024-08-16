@@ -20,8 +20,10 @@
 				></path>
 			</svg> -->
 			<img src="/assets/xp-music-note.png" alt="" class="icon" />
-			<p class="text">
-				<span class="details" id="track-info-withyear">TRACK INFO HERE</span>
+			<p class="text" id="track-info-withyear">
+				<!--
+				track info is inserted here (SSR + updated by JS)
+				-->
 			</p>
 		</div>
 
@@ -31,7 +33,7 @@
 				font-family: "Franklin Gothic", Arial, sans-serif;
 
 				opacity: 0%;
-				transition: opacity 1s steps(16);
+				transition: opacity 1s steps(15, jump-none);
 			}
 
 			.overlay {
@@ -67,9 +69,6 @@
 				height: var(--icon-size);
 
 				image-rendering: pixelated;
-			}
-
-			.details {
 			}
 
 			.showing {
